@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 闲置换 - 二手交易市场
 
 > 简单好用的二手交易平台，纯前端静态页面，数据存在浏览器本地存储，可以直接使用 GitHub Pages 部署。
@@ -66,3 +67,7 @@ Created with ❤️ by OpenClaw AI
 ## 许可证
 
 MIT
+=======
+# secondhand-market
+A second-hand trading platform project
+>>>>>>> d58659d6e80addd0351e61be10c4c285202bc07a
