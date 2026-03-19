@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闲置换 - 二手交易市场</title>
+    <meta name="description" content="简单好用的二手物品交易平台，闲置物品一键发布，轻松淘好物">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#FF6B6B"/>
+                    <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">闲置换</span>
+            </div>
+            <div class="search-bar">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="5" stroke="#999" stroke-width="2"/>
+                    <path d="M12.5 12.5L16 16" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="搜索二手商品...">
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" id="categoryBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="10" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="2" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="10" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    分类
+                </button>
+                <button class="btn-primary" id="publishBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2V16M2 9H16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    发布闲置
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <header class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>让闲置<br><span>流动起来</span></h1>
+                <p>你的闲置，可能是别人的宝贝<br>一键发布，快速交易</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="totalItems">1,234</span>
+                        <span class="stat-label">闲置商品</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="todayDeals">89</span>
+                        <span class="stat-label">今日成交</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <div class="f-card-image"></div>
+                    <div class="f-card-info">
+                        <span class="f-card-price">¥1299</span>
+                        <span class="f-card-title">iPhone 14 128G</span>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="f-card-image"></div>
+                    <div class="f-card-info">
+                        <span class="f-card-price">¥499</span>
+                        <span class="f-card-title">宜家沙发</span>
+                    </div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="f-card-image"></div>
+                    <div class="f-card-info">
+                        <span class="f-card-price">¥89</span>
+                        <span class="f-card-title">全新卫衣</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 分类筛选 -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="categories-scroll">
+                <button class="category-tag active" data-category="all">全部</button>
+                <button class="category-tag" data-category="electronics">数码电子</button>
+                <button class="category-tag" data-category="clothing">服饰鞋包</button>
+                <button class="category-tag" data-category="furniture">家居家具</button>
+                <button class="category-tag" data-category="books">书籍文具</button>
+                <button class="category-tag" data-category="sports">运动健身</button>
+                <button class="category-tag" data-category="beauty">美妆护肤</button>
+                <button class="category-tag" data-category="other">其他</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 商品列表 -->
+    <main class="container">
+        <div class="products-grid" id="productsGrid">
+            <!-- 商品卡片会通过 JS 动态生成 -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="60" height="60" rx="8" stroke="#ddd" stroke-width="2"/>
+                <path d="M25 40L55 40" stroke="#ddd" stroke-width="2" stroke-linecap="round"/>
+                <path d="M40 25L40 55" stroke="#ddd" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>暂无商品</h3>
+            <p>快来发布第一个闲置商品吧！</p>
+            <button class="btn-primary" id="emptyPublishBtn">发布商品</button>
+        </div>
+
+        <div class="load-more" id="loadMoreContainer">
+            <button class="btn-secondary" id="loadMoreBtn">加载更多</button>
+        </div>
+    </main>
+
+    <!-- 发布商品弹窗 -->
+    <div class="modal" id="publishModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>发布闲置商品</h2>
+                <button class="modal-close" id="closeModal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="publishForm">
+                <div class="form-group">
+                    <label>商品图片</label>
+                    <div class="image-upload" id="imageUpload">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="6" stroke="#ddd" stroke-width="2"/>
+                            <path d="M20 12V28M12 20H28" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <p>点击上传图片<br>支持 JPG、PNG</p>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productTitle">商品名称</label>
+                    <input type="text" id="productTitle" placeholder="例如：iPhone 14 128G 黑色" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">价格 (¥)</label>
+                        <input type="number" id="productPrice" placeholder="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="originalPrice">原价 (¥)</label>
+                        <input type="number" id="originalPrice" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">商品分类</label>
+                    <select id="productCategory" required>
+                        <option value="">请选择分类</option>
+                        <option value="electronics">数码电子</option>
+                        <option value="clothing">服饰鞋包</option>
+                        <option value="furniture">家居家具</option>
+                        <option value="books">书籍文具</option>
+                        <option value="sports">运动健身</option>
+                        <option value="beauty">美妆护肤</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productCondition">商品成色</label>
+                    <div class="condition-options">
+                        <label class="condition-label">
+                            <input type="radio" name="condition" value="全新" checked>
+                            <span class="condition-btn">全新</span>
+                        </label>
+                        <label class="condition-label">
+                            <input type="radio" name="condition" value="九成新">
+                            <span class="condition-btn">九成新</span>
+                        </label>
+                        <label class="condition-label">
+                            <input type="radio" name="condition" value="八成新">
+                            <span class="condition-btn">八成新</span>
+                        </label>
+                        <label class="condition-label">
+                            <input type="radio" name="condition" value="七成新">
+                            <span class="condition-btn">七成新</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">商品描述</label>
+                    <textarea id="productDescription" placeholder="描述一下商品的使用情况、瑕疵、入手渠道等信息..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="sellerLocation">所在地区</label>
+                    <input type="text" id="sellerLocation" placeholder="例如：北京市 朝阳区">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelPublish">取消</button>
+                    <button type="submit" class="btn-primary">发布商品</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 商品详情弹窗 -->
+    <div class="modal" id="detailModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>商品详情</h2>
+                <button class="modal-close" id="closeDetailModal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="detail-content" id="detailContent">
+                <!-- 动态填充 -->
+            </div>
+            <div class="detail-actions">
+                <a href="#" id="contactSeller" class="btn-primary" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 6L9 10L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="1" y="3" width="16" height="12" rx="2" stroke="white" stroke-width="2"/>
+                    </svg>
+                    联系卖家
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>闲置换</h4>
+                    <p>让闲置流动，让价值延续</p>
+                </div>
+                <div class="footer-section">
+                    <h4>分类导航</h4>
+                    <ul>
+                        <li><a href="#" data-category="electronics">数码电子</a></li>
+                        <li><a href="#" data-category="clothing">服饰鞋包</a></li>
+                        <li><a href="#" data-category="furniture">家居家具</a></li>
+                        <li><a href="#" data-category="books">书籍文具</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>帮助中心</h4>
+                    <ul>
+                        <li><a href="#">发布规则</a></li>
+                        <li><a href="#">交易安全</a></li>
+                        <li><a href="#">买家指南</a></li>
+                        <li><a href="#">卖家指南</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 闲置换 - 简单好用的二手交易平台</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
